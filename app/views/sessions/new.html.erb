@@ -1,0 +1,21 @@
+<div class="container">
+  <%= render "layouts/errors" %>
+
+  <h1>Sign In</h1>
+
+  <form action="<%= session_url %>" method="post">
+    <%= auth_token_input %>
+    <label>
+      Email<br>
+      <input type="text" name="user[email]">
+    </label>
+    <br>
+    <label>
+      Password<br>
+      <input type="password" name="user[password]">
+    </label>
+    <br>
+    <input type="submit" class="btn btn-primary" value="Login">
+    <a href="<%= new_user_url %>">New to Trellino?</a>
+  </form>
+</div>
