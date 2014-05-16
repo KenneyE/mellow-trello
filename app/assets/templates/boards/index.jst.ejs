@@ -1,0 +1,18 @@
+<h1>All the boards</h1>
+
+<a href="#/new" class="btn btn-primary">New Board</a>
+<div class="row">
+    <div class="col-xs-4">
+        <table class="table table-striped">
+            <% boards.forEach (function (board) { %>
+                <tr>
+                    <td><%= board.escape('title') %></td>
+                    <td><a href="#/<%= board.escape('id') %>">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a></td>
+                </tr>
+
+                <% }) %>
+            </table>
+        </div>
+    </div>

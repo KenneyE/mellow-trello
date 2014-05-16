@@ -4,7 +4,7 @@ window.Trellino = {
   Views: {},
   Routers: {},
   initialize: function() {
-      new window.Trellino.Routers.AppRouter($(".container"));
+      new window.Trellino.Routers.AppRouter($("#body-wrapper"));
       Backbone.history.start();
   }
 };
