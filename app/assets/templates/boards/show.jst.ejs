@@ -1,15 +1,33 @@
 <h1><%= board.escape('title') %></h1>
+<a href="#/<%= board.escape('id') %>/new_list"
+    class="btn btn-primary">New List</a>
+    <div class="row">
+        <div class="col-xs-4">
+            <table class="table table-striped">
+                <% board.lists().forEach(function (list) { %>
+                    <tr>
+                        <td><%= list.escape('title') %></td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
 
-<div class="row">
-    <a href="#/<%= board.escape('id') %>/new_list"
-        class="btn btn-primary">New List</a>
-    <div class="col-xs-4">
-        <table class="table table-striped">
-            <% board.lists().forEach(function (list) { %>
-                <tr>
-                    <td><%= list.escape('title') %></td>
-                </tr>
-            <% }) %>
-        </table>
+        <div class="col-xs-4">
+            <form id="add-member">
+                <label for="group-member">Add Member</label>
+                <div class="input-group">
+                    <input type="text"
+                    class="form-control"
+                    id="group-member"
+                    name="group[member]"
+                    placeholder="Enter Member"
+                    >
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary"
+                        type="submit"
+                        value="Add Member">
+                    </span>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
