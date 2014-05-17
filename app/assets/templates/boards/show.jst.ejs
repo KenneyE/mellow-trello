@@ -1,4 +1,14 @@
-<h1><%= board.escape('title') %></h1>
+<div class="row">
+    <div class="col-xs-6">
+        <h1><%= board.escape('title') %>
+            <button class="btn btn-warning" id="delete-board">
+                Delete Board
+            </button>
+        </h1>
+
+    </div>
+</div>
+
 <a href="#/<%= board.escape('id') %>/new_list"
     class="btn btn-primary">New List</a>
     <div class="row">

@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     inverse_of: :users
 
   def self.find_by_credentials(username, password)
-    user = User.find_by_username(username)
+    user = User.find_by_email(username)
     user.try(:is_password?, password) ? user : nil
   end
 

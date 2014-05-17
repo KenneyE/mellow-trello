@@ -18,6 +18,7 @@ window.Trellino.Views.BoardShow = Backbone.View.extend ({
    
    events: {
        "submit #add-member": "addMember",
+       "click #delete-board": "deleteBoard",
    },
    
    addMember: function (event) {
@@ -29,9 +30,14 @@ window.Trellino.Views.BoardShow = Backbone.View.extend ({
        
        board.save({}, {
            success: function () {
-               console.log("Saved");
-                $form.find("input").val("")
+                $form.find("input[type=text]").val("");
            }
        });
+   },
+   
+   deleteBoard: function (event) {
+       event.preventDefault();
+       this.model.destroy();  
+       Backbone.history.navigate("", { trigger: true })
    },
 });

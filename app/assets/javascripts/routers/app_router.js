@@ -6,8 +6,8 @@ window.Trellino.Routers.AppRouter = Backbone.Router.extend({
     routes: {
         "": "boardsIndex",
         "new": "newBoard",
-        ":id" : "showBoard",
         ":board_id/new_list": "newList",
+        ":id" : "showBoard",
     },
     
     boardsIndex: function () {
