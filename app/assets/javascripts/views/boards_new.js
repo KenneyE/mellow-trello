@@ -1,4 +1,4 @@
-window.Trellino.Views.NewBoard = Backbone.View.extend ({
+window.Trellino.Views.BoardNew = Backbone.View.extend ({
     template: JST["boards/new"],
     
     render: function () {
@@ -19,8 +19,10 @@ window.Trellino.Views.NewBoard = Backbone.View.extend ({
         var board = new Trellino.Models.Board(formData.board);
         board.save({}, {
             success: function () {
-                Backbone.history.navigate("", {trigger: true })
+                var url = String(board.id);
+                Backbone.history.navigate(url, {trigger: true });
             }
-        })
-    }    
+        });
+    },
+        
 });

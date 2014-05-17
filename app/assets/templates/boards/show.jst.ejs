@@ -1,0 +1,15 @@
+<h1><%= board.escape('title') %></h1>
+
+<div class="row">
+    <a href="#/<%= board.escape('id') %>/new_list"
+        class="btn btn-primary">New List</a>
+    <div class="col-xs-4">
+        <table class="table table-striped">
+            <% board.lists().forEach(function (list) { %>
+                <tr>
+                    <td><%= list.escape('title') %></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
+</div>

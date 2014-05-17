@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+<h1>New List for <%= board.escape('title') %></h1>
+
+        <form>
+            <input type="hidden" name="list[board_id]" value="<%= board.id %>">
+            <div class="form-group col-md-4">
+                <label for="list-title">Title</label>
+                <input type="text" class="form-control"
+                name="list[title]" id="list-title"
+                placeholder="Enter Title">
+            </div>
+
+            <div class="form-group  col-md-4">
+                <label for="list-rank">Rank</label>
+                <input type="text" class="form-control"
+                name="list[rank]" id="list-rank"
+                placeholder="Enter Rank">
+            </div>
+
+            <p><input class="btn btn-primary"
+                type="submit"
+                value="Add List">
+            </p>
+        </form>
+    </div>
+</div>
