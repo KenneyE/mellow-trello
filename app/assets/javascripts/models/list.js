@@ -1,6 +1,6 @@
 window.Trellino.Models.List = Backbone.Model.extend ({
-    initialize: function (attr, options) {
-        this.set(attr);
+    initialize: function (attrs, options) {
+        this.set(attrs);
         this.board = options.board;
     },
     
@@ -8,4 +8,17 @@ window.Trellino.Models.List = Backbone.Model.extend ({
         return "api/boards/" + this.board.get("id") + "/lists";
     },
     
+    cards: function () {
+        this._cards = this._cards || 
+            new Trellino.Collections.Lists([], {list: this});
+        return this._cards;
+    },
+    
+    parse: function (resp) {
+        if (resp.cards) {
+            this.cards().set(resp.cards, {parse: true});
+            delete resp.cards;
+        }
+        return resp;
+    },
 });
