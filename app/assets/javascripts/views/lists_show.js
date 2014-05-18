@@ -19,24 +19,33 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     },
     
     events: {
-        "submit #new-card-form": "newCard",
+        "click .new-card-button": "showNewCardModal",
+        "submit .new-card-form": "newCard",
+    },
+
+    showNewCardModal: function () {
+        this.$(".new-card-modal").modal("show");
     },
     
     newCard: function (event) {
+        var that = this;
        event.preventDefault();
+       this.$(".new-card-modal").modal("hide");
        $form = $(event.currentTarget);
        formData = $form.serializeJSON();
        
        // var list = Trellino.Collections.Lists.getOrFetch(this.model.id);
-       var card = new Trellino.Models.Card(formData.card, {list: this.model});
+       var card = new Trellino.Models.Card(formData.card);
        card.save({}, {
-           success: alert("Card was saved")
-       });
+           success: function () {
+               that.model.cards().add(card);
+           }
+       })
     },
     
     newCardView: function () {
-       var cardsNewView = new Trellino.Views.CardsNew();
-       this.addSubview(".new-card", cardsNewView);
+       var cardsNewView = new Trellino.Views.CardsNew({ list: this.model });
+       this.addSubview("div.new-card", cardsNewView);
        cardsNewView.render(); 
     },
     

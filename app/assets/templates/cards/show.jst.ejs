@@ -1,4 +1,7 @@
-<div class="card">
-    <h4><%= card.escape("title") %></h4>
+<div class="card clearfix">
+    <h4 class="pull-left"><%= card.escape("title") %></h4>
+    <button class="delete-card hidden btn btn-xs btn-warning pull-right">
+        delete
+    </button>
     <p><%= card.escape("description") %></p>
 </div>
