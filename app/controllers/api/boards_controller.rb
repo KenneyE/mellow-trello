@@ -25,7 +25,12 @@ module Api
       if params[:newMemberEmail]
         email = params[:newMemberEmail]
         new_member = User.find_by_email(email)
-        new_member && !@board.members.include?(new_member) && @board.members << new_member
+        if new_member.nil?
+          render json: { errors: {newMemberEmail: ["Does not exist"]}}, status: 422
+          return
+        else
+          !@board.members.include?(new_member) && @board.members << new_member
+        end
       end
 
       if @board.update_attributes(board_params)
