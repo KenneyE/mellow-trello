@@ -12,9 +12,9 @@ window.Trellino.Routers.AppRouter = Backbone.Router.extend({
     
     boardsIndex: function () {
         
-        Trellino.Boards.fetch();
+        Trellino.boards.fetch();
 
-        var view = new Trellino.Views.BoardsIndex({collection: Trellino.Boards});
+        var view = new Trellino.Views.BoardsIndex({collection: Trellino.boards});
         view.render();
         
         this.$rootEl.html(view.$el);
@@ -27,9 +27,7 @@ window.Trellino.Routers.AppRouter = Backbone.Router.extend({
     },
     
     showBoard: function (id) {
-        var board = new Trellino.Models.Board({id: id});
-        board.fetch();
-        board.lists().fetch();
+        var board = Trellino.boards.getOrFetch(id);
         
         var view = new Trellino.Views.BoardShow({model: board});
         view.render();
@@ -38,7 +36,7 @@ window.Trellino.Routers.AppRouter = Backbone.Router.extend({
     },
     
     newList: function (board_id) {
-        var board = Trellino.Boards.getOrFetch(board_id);
+        var board = Trellino.boards.getOrFetch(board_id);
         
         var view = new Trellino.Views.ListsNew({board: board});
         view.render();

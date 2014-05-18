@@ -7,11 +7,11 @@ window.Trellino.Models.Board = Backbone.Model.extend({
         return this._lists;
     },
     
-    parse: function (board) {
-        if (board.lists) {
-            this.lists().set(board.lists, { parse: true });
-            delete board.lists;
+    parse: function (resp) {
+        if (resp.lists) {
+            this.lists().set(resp.lists, { parse: true });
+            delete resp.lists;
         }
-        return board;
+        return resp;
     },
 });

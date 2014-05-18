@@ -12,14 +12,7 @@
 <a href="#/<%= board.escape('id') %>/new_list"
     class="btn btn-primary">New List</a>
     <div class="row">
-        <div class="col-xs-12">
-                <% board.lists().forEach(function (list) { %>
-                    <div class="list">
-                        <h4><%= list.escape('title') %></h4>
-                    </div>
-                <% }) %>
-            </table>
-        </div>
+        <div class="lists col-xs-12"></div>
 
         <div class="col-xs-4">
             <form id="add-member">
