@@ -26,11 +26,16 @@ window.Trellino.Views.BoardShow = Backbone.View.extend ({
        var $form = $(event.currentTarget)
        var formData = $form.serializeJSON();
        var board = Trellino.Boards.getOrFetch(this.model.id);
-       board.set({newMemberEmail: formData.group.member})
        
-       board.save({}, {
+       board.save({newMemberEmail: formData.group.member}, {
            success: function () {
+               $("#flash-notice").html("Member Added");
                 $form.find("input[type=text]").val("");
+           },
+           
+           error: function () {
+               $("#flash-error").html("Member Could Not Be Added");
+               
            }
        });
    },
