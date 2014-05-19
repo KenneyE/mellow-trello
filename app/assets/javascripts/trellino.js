@@ -1,13 +1,13 @@
 window.Trellino = {
-  Models: {},
-  Collections: {},
-  Views: {},
-  Routers: {},
-  initialize: function() {
-      new window.Trellino.Routers.AppRouter($("div#content"));
-      Trellino.boards = new Trellino.Collections.Boards();
-      Backbone.history.start();
-  }
+    Models: {},
+    Collections: {},
+    Views: {},
+    Routers: {},
+    initialize: function() {
+        new window.Trellino.Routers.AppRouter($("div#content"));
+        Trellino.boards = new Trellino.Collections.Boards();
+        Backbone.history.start();
+    }
 };
 
 Backbone.CompositeView = Backbone.View.extend({
@@ -15,9 +15,16 @@ Backbone.CompositeView = Backbone.View.extend({
         var selectorSubviews = 
         this.subviews()[selector] || (this.subviews()[selector] = []);
         
-        selectorSubviews.push(subview);
+        if (subview.model) {
+            var rank = subview.model.get('rank');
+            this.subviews()[selector].splice(rank-1, 0, subview);
+        }   else {
+            selectorSubviews.push(subview);
+        }
         var $selectorEl = this.$(selector);
         $selectorEl.append(subview.$el);
+        
+        
     },
     
     renderSubviews: function () {
@@ -32,12 +39,12 @@ Backbone.CompositeView = Backbone.View.extend({
     },
     
     remove: function () {
-       Backbone.View.remove.prototype.call(this);
-       _(this.subviews).each ( function (selectorSubviews, selector) {
-           _(selectorSubview).each (function (subview) {
-               subview.remove();
-           });
-       }) ;
+        Backbone.View.remove.prototype.call(this);
+        _(this.subviews).each ( function (selectorSubviews, selector) {
+            _(selectorSubview).each (function (subview) {
+                subview.remove();
+            });
+        }) ;
     },
     
     removeSubview: function (selector, subview) {
@@ -49,14 +56,14 @@ Backbone.CompositeView = Backbone.View.extend({
         subview.remove();
     },
     
-   subviews: function () {
-       if (!this._subviews) {
-           this._subviews = {};
-       }
-       return this._subviews;
-   },
+    subviews: function () {
+        if (!this._subviews) {
+            this._subviews = {};
+        }
+        return this._subviews;
+    },
 });
 
 $(document).ready(function(){
-  Trellino.initialize();
+    Trellino.initialize();
 });

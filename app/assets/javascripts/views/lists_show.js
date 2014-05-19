@@ -1,9 +1,20 @@
 window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
+    tagName: "li",
+    
+    className: "list",
+    
     id: function () {
         return 'list_' + String(this.model.get('id'))
     },
     
+    cryIfBroken: function () {
+        if (!this.model) {
+            debugger;
+        }
+    },
+    
     initialize: function () {
+        this.cryIfBroken();
         var view = this;
         this.listenTo(this.model, "sync", this.render);
         this.listenTo(this.model.cards(), "add", this.addCard);
@@ -11,6 +22,7 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
 
         this.model.cards().each ( function (card) {
             view.addCard(card);
+            view.cryIfBroken();
         });
         
         this.newCardView();
@@ -18,9 +30,10 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     
     addCard: function (card) {
         var cardsShowView = 
-        new Trellino.Views.CardsShow({model: card, list: this.model});
+            new Trellino.Views.CardsShow({model: card, list: this.model});
         this.addSubview(".cards", cardsShowView);
         cardsShowView.render();
+        this.cryIfBroken();
     },
         
     events: {
@@ -34,7 +47,8 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     newCardView: function () {
         var cardsNewView = new Trellino.Views.CardsNew({ list: this.model });
         this.addSubview("div.new-card", cardsNewView);
-        cardsNewView.render(); 
+        this.cryIfBroken();
+        // cardsNewView.render(); 
     },
     
     removeCard: function (card) {
@@ -51,7 +65,7 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
         var content = this.template({list: this.model});
 
         this.$el.html(content);
-        this.$(".sortable").sortable({
+        this.$el.find(".sortable-cards").sortable({
             update: function (event, ui) {
                 var data = $(this).sortable('serialize');
                 var rank = data.replace(/card\[\]=/g, '').split("&");
@@ -68,7 +82,9 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
                    
             }
         });
+        this.cryIfBroken();
         this.renderSubviews();
+        this.cryIfBroken();
         return this;
     },
     
