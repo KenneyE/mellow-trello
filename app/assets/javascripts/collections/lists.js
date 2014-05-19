@@ -1,4 +1,6 @@
 window.Trellino.Collections.Lists = Backbone.Collection.extend ({
+    comparator: 'rank',
+    
     model: Trellino.Models.List,
 
     url: function () {

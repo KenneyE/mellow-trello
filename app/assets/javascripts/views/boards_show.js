@@ -1,6 +1,6 @@
 window.Trellino.Views.BoardShow = Backbone.CompositeView.extend ({
     template: JST["boards/show"],
-   
+      
     initialize: function () {
         var view = this;
         this.listenTo(this.model, "sync", this.render);       
@@ -32,6 +32,22 @@ window.Trellino.Views.BoardShow = Backbone.CompositeView.extend ({
         var view = this;
         var content = this.template( {board: this.model });
         this.$el.html(content);
+        this.$(".sortable").sortable({
+            axis: "x",
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                var rank = data.replace(/list\[\]=/g, "").split("&");
+                
+                view.model.lists().forEach (function (list) {
+                    debugger
+                    list.save({"rank": rank.indexOf(String(list.id)) + 1}, {
+                        success: function () {
+                            view.model.lists().sort();
+                        }
+                    });
+                });
+            },
+        });
 
         this.renderSubviews();
         return this;
