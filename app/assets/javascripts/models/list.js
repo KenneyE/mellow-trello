@@ -1,11 +1,15 @@
 window.Trellino.Models.List = Backbone.Model.extend ({
     initialize: function (attrs, options) {
         this.set(attrs);
-        this.board = options.board;
+        // this.board = options.board;
     },
     
-    urlRoot: function () {
-        return "api/boards/" + this.board.get("id") + "/lists";
+    url: function () {
+        if (this.isNew()) {
+            return "api/boards/" + this.get("board_id") + "/lists";
+        } else {
+            return "api/lists/" + this.get('id');
+        }
     },
     
     cards: function () {

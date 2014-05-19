@@ -13,7 +13,8 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     },
     
     addCard: function (card) {
-        var cardsShowView = new Trellino.Views.CardsShow({model: card});
+        var cardsShowView = 
+            new Trellino.Views.CardsShow({model: card, list: this.model});
         this.addSubview(".cards", cardsShowView);
         cardsShowView.render();
     },
@@ -37,7 +38,7 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     removeCard: function (card) {
        var cardsShowView = 
        _(this.subviews()[".cards"]).find (function (subview) {
-           subview.model == card;
+           return subview.model == card;
        });
        
        this.removeSubview(".cards", cardsShowView);

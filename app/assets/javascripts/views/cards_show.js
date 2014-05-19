@@ -5,12 +5,15 @@ window.Trellino.Views.CardsShow = Backbone.View.extend ({
         "click .delete-card": "removeCard",
     },
     
-    initialize: function () {
+    initialize: function (options) {
+        this.list = options.list;
         this.listenTo(this.model, "sync", this.render);
+        
     },
     
     removeCard: function () {
-        
+        this.list.cards().remove(this.model);
+        this.model.destroy();
     },
     
     render: function () {
