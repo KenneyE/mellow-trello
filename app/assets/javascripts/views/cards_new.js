@@ -28,6 +28,6 @@ window.Trellino.Views.CardsNew = Backbone.View.extend ({
             success: function () {
                 that.list.cards().add(card);
             }
-        })
+        });
     },
 });
