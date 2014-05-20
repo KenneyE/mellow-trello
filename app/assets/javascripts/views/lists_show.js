@@ -1,20 +1,13 @@
 window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     tagName: "li",
     
-    className: "list",
+    className: "list col-xs-3",
     
     id: function () {
-        return 'list_' + String(this.model.get('id'))
-    },
-    
-    cryIfBroken: function () {
-        if (!this.model) {
-            debugger;
-        }
+        return 'list_' + String(this.model.get('id'));
     },
     
     initialize: function () {
-        this.cryIfBroken();
         var view = this;
         this.listenTo(this.model, "sync", this.render);
         this.listenTo(this.model.cards(), "add", this.addCard);
@@ -22,7 +15,6 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
 
         this.model.cards().each ( function (card) {
             view.addCard(card);
-            view.cryIfBroken();
         });
         
         this.newCardView();
@@ -33,7 +25,6 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
             new Trellino.Views.CardsShow({model: card, list: this.model});
         this.addSubview(".cards", cardsShowView);
         cardsShowView.render();
-        this.cryIfBroken();
     },
         
     events: {
@@ -47,7 +38,6 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
     newCardView: function () {
         var cardsNewView = new Trellino.Views.CardsNew({ list: this.model });
         this.addSubview("div.new-card", cardsNewView);
-        this.cryIfBroken();
         // cardsNewView.render(); 
     },
     
@@ -66,26 +56,54 @@ window.Trellino.Views.ListsShow = Backbone.CompositeView.extend({
 
         this.$el.html(content);
         this.$el.find(".sortable-cards").sortable({
+            connectWith: ".sortable-cards",
+            
             update: function (event, ui) {
+                debugger;
                 var data = $(this).sortable('serialize');
-                var rank = data.replace(/card\[\]=/g, '').split("&");
-
-                view.model.cards().forEach (function (card) {
-                    card.save({"rank": _.indexOf(rank, String(card.id)) + 1}, {
-                        success: function () {
-                            view.model.cards().sort();
-                        }
-                    })
-                });
-
+                // var card = view.findCard($(ui.item));
+                // view.model.cards().remove(card);
+                view.updateRanks(data);
                 // view.model.cards().sync('update', view.model.cards());
-                   
-            }
+            },
+            
+            // receive: function (event, ui) {
+            //     debugger;
+            //     var movedCard = view.findCard($(ui.item));
+            //     
+            //     var targetListID = $(event.target).data('id');
+            //     var newList = view.model.board.lists().find(function (list) {
+            //         return list.get('id') == targetListID;
+            //     });
+            //     
+            //     newList.cards().add(movedCard);
+            //     
+            //     var data = $(event.target).sortable('serialize');
+            //     view.updateRanks(data);
+            // }
         });
-        this.cryIfBroken();
+        
         this.renderSubviews();
-        this.cryIfBroken();
         return this;
+    },
+    
+    updateRanks: function (data) {
+        var rank = data.replace(/card\[\]=/g, '').split("&");
+        this.model.cards().forEach (function (card) {
+            card.save({"rank": _.indexOf(rank, String(card.id)) + 1}, {
+                // success: function () {
+                //     view.model.cards().sort();
+                // }
+            });
+        });
+    },
+    
+    findCard: function ($item) {
+        var cardID =  $item.attr('id').replace(/card\_/g, '');
+        var movedCard = this.model.cards().find( function (card) {
+            return card.get('id') == cardID;
+        });
+        return movedCard;
     },
     
     template: JST['lists/show'],

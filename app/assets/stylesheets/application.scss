@@ -16,18 +16,16 @@
 @import "bootstrap";
 
 .list {
-    width: 300px;
     min-height: 200px;
-    float: left;
-    margin: 7px;
-    padding: 5px;
+    list-style: none;
     box-shadow: 0 0 3px #aaa;
     border-radius: 5px;
+    padding: 10px;
 }
 
 div.card {
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 2px #aaa;
     background-color: rgba(81, 163, 81, 0.2);
@@ -39,4 +37,8 @@ div.card h4 {
 
 ul {
     list-style: none;
+}
+
+.cards {
+    min-height: 100px;
 }

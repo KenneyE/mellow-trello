@@ -1,7 +1,7 @@
 window.Trellino.Models.List = Backbone.Model.extend ({
     initialize: function (attrs, options) {
         this.set(attrs);
-        // this.board = options.board;
+        this.board = options.board;
     },
     
     url: function () {
